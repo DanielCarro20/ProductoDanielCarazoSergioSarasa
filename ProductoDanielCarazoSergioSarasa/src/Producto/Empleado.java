@@ -1,6 +1,6 @@
 package Producto;
 
-public class Empleado {
+public class Empleado extends Persona{
 	protected int id;
 	protected String puesto;
 	protected double salario;

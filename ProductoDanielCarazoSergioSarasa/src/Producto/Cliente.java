@@ -1,6 +1,12 @@
 package Producto;
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente extends Persona implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected int id;
 	protected String direccion;
 	
