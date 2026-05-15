@@ -10,6 +10,7 @@ import java.util.List;
 
 import Producto.Factura;
 import Producto.LineaFactura;
+import Producto.Producto;
 import util.ConexionBD;
 
 public class LineaFacturaDAO implements GenericDAO<LineaFactura> {
@@ -40,7 +41,7 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura> {
 		    }
 
 		
-		
+	
 	
 
 	@Override
@@ -84,9 +85,20 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura> {
 	}
 
 	@Override
-	public boolean eliminar(int id) {
-		// TODO Auto-generated method stub
+	public boolean eliminar(int idproducto) {
+		
+		  String sql = "DELETE FROM LINEAFACTURA WHERE (SELECT count(*) FROM LINEAFACTURA LF JOIN PRODUCTO P ON P.ID=LF.ID_PRODUCTO WHERE LF.ID_PRODUCTO = ?)>0";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+		          ps.setInt(1, idproducto);
+		          return ps.executeUpdate() > 0;
+		    
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+
 		return false;
+		
 	}
 
 	private LineaFactura mapearFila(ResultSet rs) throws SQLException {

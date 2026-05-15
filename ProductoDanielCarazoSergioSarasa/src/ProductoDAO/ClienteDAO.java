@@ -28,8 +28,9 @@ public class ClienteDAO implements GenericDAO<Cliente> {
 	                    cliente.setId(rs.getInt(1));
 	                     sql = "INSERT INTO CLIENTE (id,direccion) values (?,?)";
 	            	    try (PreparedStatement ps1 = con.prepareStatement(sql)) {
-	            	    	ps1.setString(1, cliente.getDireccion());
-	            	    	ps1.setInt(2, cliente.getId());
+	            	    	ps1.setInt(1, cliente.getId());
+	            	    	ps1.setString(2, cliente.getDireccion());
+	            	    
 	            	          return ps1.executeUpdate() > 0;
 	            	          
 	            	        

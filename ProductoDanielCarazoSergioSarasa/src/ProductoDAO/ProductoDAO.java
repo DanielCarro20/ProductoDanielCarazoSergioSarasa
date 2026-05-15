@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import Producto.Factura;
 import Producto.Producto;
 import util.ConexionBD;
 
@@ -57,6 +58,11 @@ public class ProductoDAO implements GenericDAO<Producto>{
 		   return prod;
 	}
 
+	
+	
+	
+	
+	
 	@Override
 	public Producto obtenerPorId(int id) {
 		  String sql = "SELECT * FROM PRODUCTO WHERE ID = ?";
@@ -76,11 +82,13 @@ public class ProductoDAO implements GenericDAO<Producto>{
 
 	@Override
 	public boolean actualizar(Producto objeto) {
-		 String sql = "UPDATE PRODUCTO set precio = ? where id = ?";
+		 String sql = "UPDATE PRODUCTO set nombre = ?, precio = ?, stock = ? where id = ?";
 		   try (Connection con = ConexionBD.getConnection();
 		        PreparedStatement ps = con.prepareStatement(sql)) {
-		          ps.setDouble(1, objeto.getPrecio());
-		          ps.setInt(2, objeto.getId());
+		         ps.setString(1, objeto.getNombre());
+		         ps.setDouble(2, objeto.getPrecio());
+		         ps.setInt(3, objeto.getStock());
+		         ps.setInt(4, objeto.getId());
 		          return ps.executeUpdate() > 0;
 		    
 		    } catch (SQLException e) {

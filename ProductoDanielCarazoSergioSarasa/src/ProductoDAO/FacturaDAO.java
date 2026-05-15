@@ -61,6 +61,25 @@ public class FacturaDAO implements GenericDAO<Factura> {
 	}
 
 	
+
+	public ArrayList<Factura> verfacturasprod(int idproducto) {
+		ArrayList<Factura> facts = new ArrayList<Factura>();
+		 String sql = "SELECT * FROM FACTURA F JOIN LINEAFACTURA LF ON F.ID=LF.ID_FACTURA WHERE LF.ID_PRODUCTO = ?";
+		   try (Connection con = ConexionBD.getConnection();
+		        PreparedStatement ps = con.prepareStatement(sql)) {
+			   ps.setInt(1, idproducto);
+		          ResultSet rs = ps.executeQuery();
+		          while (rs.next()) {
+		               facts.add(mapearFila(rs));
+		          }
+		    
+		    } catch (SQLException e) {
+		            System.out.println("Error: " + e.getMessage());
+		    }
+		   return facts;
+
+
+	}
 	
 	public Factura obtenerPorIdFactura(int id) {
 		String sql = "SELECT * FROM FACTURA WHERE id = ?";
