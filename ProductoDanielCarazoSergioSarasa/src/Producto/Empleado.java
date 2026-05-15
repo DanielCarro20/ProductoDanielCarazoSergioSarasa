@@ -1,29 +1,25 @@
 package Producto;
 
-public class Empleado extends Persona{
-	protected int id;
+import java.io.Serializable;
+
+public class Empleado extends Persona implements Serializable{
 	protected String puesto;
 	protected double salario;
+	public Empleado(int id, String dni, String nombre, String puesto, double salario) {
+		super(id, dni, nombre);
+		this.puesto = puesto;
+		this.salario = salario;
+	}
+	public Empleado(String dni, String nombre, String puesto, double salario) {
+		super(dni, nombre);
+		this.puesto = puesto;
+		this.salario = salario;
+	}
 	
-	public Empleado(int id, String puesto, double salario) {
-		super();
-		this.id = id;
-		this.puesto = puesto;
-		this.salario = salario;
-	}
-	public Empleado(String puesto, double salario) {
-		super();
-		this.puesto = puesto;
-		this.salario = salario;
-	}
+	
 	public Empleado() {
 		super();
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
+		
 	}
 	public String getPuesto() {
 		return puesto;
@@ -39,9 +35,12 @@ public class Empleado extends Persona{
 	}
 	@Override
 	public String toString() {
-		return "Empleado [id=" + id + ", puesto=" + puesto + ", salario=" + salario + "]";
+		return "Empleado [puesto=" + puesto + ", salario=" + salario + ", getId()=" + getId() + ", getDni()=" + getDni()
+				+ ", getNombre()=" + getNombre() + ", toString()=" + super.toString() + "]";
 	}
 	
 	
-
+	
+	
+	
 }

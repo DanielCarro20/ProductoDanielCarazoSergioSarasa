@@ -2,41 +2,49 @@ package Producto;
 
 import java.io.Serializable;
 
-public class Cliente extends Persona implements Serializable {
+public class Cliente extends Persona implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected int id;
+
 	protected String direccion;
-	
-	public Cliente(int id, String direccion) {
-		super();
-		this.id = id;
+
+	public Cliente(int id, String dni, String nombre, String direccion) {
+		super(id, dni, nombre);
 		this.direccion = direccion;
 	}
-	public Cliente(String direccion) {
-		super();
+
+	public Cliente(String dni, String nombre, String direccion) {
+		super( dni, nombre);
 		this.direccion = direccion;
 	}
+
 	public Cliente() {
 		super();
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getDireccion() {
 		return direccion;
 	}
+
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", direccion=" + direccion + "]";
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "Cliente [direccion=" + direccion + ", getId()=" + getId() + ", getDni()=" + getDni() + ", getNombre()="
+				+ getNombre() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
+	
+	
+	
 }

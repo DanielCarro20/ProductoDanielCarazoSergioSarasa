@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,19 +15,28 @@ public class ProductoDAO implements GenericDAO<Producto>{
 
 	@Override
 	public boolean insertar(Producto objeto) {
-		String sql = "INSERT INTO PRODUCTO (nombre,precio,stock) values (?,?,?)";
-		try (Connection con = ConexionBD.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setString(1, objeto.getNombre());
-			ps.setDouble(2, objeto.getPrecio());
-			ps.setDouble(3, objeto.getStock());
-			return ps.executeUpdate() > 0;
 
-		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
-		}
-		return false;
-
-	}
+		
+		 String sql = "INSERT INTO PRODUCTO (nombre,precio,stock) values (?,?,?)";
+		    try (Connection con = ConexionBD.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+		    	ps.setString(1, objeto.getNombre());
+				ps.setDouble(2, objeto.getPrecio());
+				ps.setDouble(3, objeto.getStock());
+		          int filas = ps.executeUpdate();
+		          if (filas > 0) {
+		                ResultSet rs = ps.getGeneratedKeys();
+		                if (rs.next()) {
+		                    objeto.setId(rs.getInt(1));
+		                }
+		                return true;
+		            }
+		      } catch (SQLException e) {
+		            System.out.println("Error al insertar: " + e.getMessage());
+		      }
+		        return false;
+		    }
+	
 
 	@Override
 	public List<Producto> obtenerTodos() {
