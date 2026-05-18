@@ -24,11 +24,7 @@ public class mainProducto {
 		ProductoDAO prodDAO = new ProductoDAO();
 		EmpleadoDAO empDAO = new EmpleadoDAO();
 
-		// 1. Muestra todos los clientes.
-		System.out.println("todos los clientes");
-		for (Cliente todosclientes : clienteDAO.obtenerTodos()) {
-			System.out.println(todosclientes);
-		}
+		CASO1(clienteDAO);
 
 		// selecciona uno escribiendo el id y muestra sus datos.
 		Scanner sc = new Scanner(System.in);
@@ -130,6 +126,36 @@ public class mainProducto {
 		for (Empleado empleados : empDAO.obtenerTodos()) {
 			System.out.println(empleados);
 		}
+		
+		Factura factura = new Factura();
+		factura.setFecha(LocalDate.now());
+		factura.setId_cliente(1);
+		factura.setId_empleado(1);
+		factura.setIva(0);
+		factura.setSubtotal(0);
+		factura.setTotal(0);
+		
+		
+		System.out.println("dime productos");
+		for (Producto prodd : prodDAO.obtenerTodos()) {
+			System.out.println(prodd);
+		}
+		int idproductos=0;
+		do {
+			
+			System.out.println("dime id de productos para meter");
+			 idproductos=Integer.parseInt(sc.nextLine());
+			
+			if (idproductos != 0) {
+				LineaFactura lf = new LineaFactura(factura.getId(), idproductos, 4, 10, 40);
+				
+			}
+			
+					
+					
+					
+		} while (idproductos != 0);
+		
 
 		// 10. Muestra todos los productos y selecciona uno. Muestras las facturas en
 		// las que aparece.
@@ -149,6 +175,14 @@ public class mainProducto {
 		// 12.
 		
 
+	}
+
+	private static void CASO1(ClienteDAO clienteDAO) {
+		// 1. Muestra todos los clientes.
+		System.out.println("todos los clientes");
+		for (Cliente todosclientes : clienteDAO.obtenerTodos()) {
+			System.out.println(todosclientes);
+		}
 	}
 
 }
