@@ -144,6 +144,10 @@ public class mainProducto {
 		}
 
 		// 11.
+		System.out.println("Elimina producto por id");
+		
+		// 12.
+		
 
 	}
 
