@@ -1,6 +1,7 @@
 package main;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Producto.Cliente;
@@ -170,7 +171,13 @@ public class mainProducto {
 		}
 
 		// 11.
-		System.out.println("Elimina producto por id");
+		System.out.println("11. Elimina producto por id");
+		ArrayList<Producto> lista = new ArrayList<Producto>();
+		System.out.println("Productos disponibles: ");
+		for (Producto prod : lista) {
+			System.out.println("Id: " + prod.getId() + " Nombre " + prod.getNombre() + " Precio " + prod.getPrecio() + " Stock " +
+		    prod.getStock());
+		}
 		
 		// 12.
 		
