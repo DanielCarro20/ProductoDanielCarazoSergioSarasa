@@ -100,6 +100,27 @@ public class LineaFacturaDAO implements GenericDAO<LineaFactura> {
 		return false;
 		
 	}
+	
+	public boolean existeProductoEnLineas(int idProducto) {
+	    String sql = "SELECT COUNT(*) FROM lineafactura WHERE id_producto = ?";
+
+	    try (Connection con = ConexionBD.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setInt(1, idProducto);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
 
 	private LineaFactura mapearFila(ResultSet rs) throws SQLException {
         LineaFactura a = new LineaFactura();

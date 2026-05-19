@@ -7,18 +7,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import Producto.Empleado;
 import Producto.Factura;
 import Producto.Producto;
 import util.ConexionBD;
 
+
 public class FacturaDAO implements GenericDAO<Factura> {
+	EmpleadoDAO empDAO = new EmpleadoDAO();
 
 	@Override
 	public boolean insertar(Factura objeto) {
-
-		
 		
 		 String sql = "INSERT INTO FACTURA (fecha,id_cliente,id_empleado,subtotal,iva,total) values (?,?,?,?,?,?)";
 		    try (Connection con = ConexionBD.getConnection();
@@ -191,6 +194,41 @@ public class FacturaDAO implements GenericDAO<Factura> {
 			System.out.println("Error: " + e.getMessage());
 		}
 		return false;
+	}
+	
+	public Map<Empleado, List<Factura>> obtenerFacturasPorEmpleadoYMes(int mes) {
+
+	    Map<Empleado, List<Factura>> mapa = new HashMap<>();
+
+	    String sql = """
+	            SELECT *
+	            FROM factura
+	            WHERE MONTH(fecha) = ?
+	            ORDER BY id_empleado
+	            """;
+
+	    try (Connection con = ConexionBD.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+
+	        ps.setInt(1, mes);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+
+	            Factura f = obtenerPorId(rs.getInt("id"));
+
+	            Empleado emp = empDAO.obtenerPorId(f.getId_empleado());
+
+	            mapa.putIfAbsent(emp, new ArrayList<>());
+	            mapa.get(emp).add(f);
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return mapa;
 	}
 
 	private Factura mapearFila(ResultSet rs) throws SQLException {
